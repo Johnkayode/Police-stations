@@ -1,13 +1,11 @@
 from pathlib import Path
+import django_heroku
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-($*&gh0^_^$kuq7y80(exwh4)jnj8_+(t^u#ii=es2$3nxofeu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -113,3 +111,16 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# ==============================================================================
+# STATIC FILES SETTINGS
+# ==============================================================================
+STATIC_URL = "/static/"
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+
+
+django_heroku.settings(locals())
