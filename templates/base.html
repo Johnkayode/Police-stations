@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Stations Near You</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel='stylesheet' href="{%static 'css/main.css'%}">
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+        body {
+        font-family: Poppins;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        color: #FFFFFF;
+        background-color: #eee;
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(255, 255, 255, 0.1)), url("https://www.npf.gov.ng/images/mopol.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+        }
+
+
+        .navbar-brand{
+            font-size: 30px;
+            color: #FFFFFF !important;
+        }
+
+        .form-signin {
+        max-width: 330px !important;
+        padding: 15px;
+        margin: 0 auto;
+        margin-bottom: 50px;
+        }
+        .form-signin .form-signin-heading{
+        margin-bottom: 20px;
+        }
+        .form-signin .checkbox {
+        font-weight: normal;
+        }
+        .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+                box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+        }
+        .form-signin .form-control:focus {
+        z-index: 2;
+        }
+        .form-signin input[type="number"],
+        .form-signin input[type="date"],
+        .form-signin input[type="text"],
+        .form-signin input[type="email"] {
+        margin-bottom: 10px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        }
+        .form-signin button{
+            margin-bottom: 5px;
+        }
+        .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        }
+       
+        footer{
+            margin-bottom: 20px 0px 0px 0px;
+        }
+
+        nav{
+            background-color: rgb(148, 129, 129, 0) !important;
+            border: none !important;
+        }
+
+        .nav-account{
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
+        .nav-account a{
+            color: #FFFFFF !important;
+        }
+
+    </style>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+              Police
+            </a>
+          </div>
+          <ul class="nav-account">
+            <a href="/account/login"><i class="fas fa-user fa-2x"></i></a>
+        </ul>
+        </div>
+    </nav>
+    {% block body %}
+    {% endblock %}
+    <footer class="mt-5">
+        <p class="text-light text-center">Built with ❤️ by Joshua</p>
+    </footer>
+    
+
+
+
+    <!--Jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
