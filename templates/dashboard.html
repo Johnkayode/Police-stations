@@ -11,6 +11,8 @@
     <style>
         body{
             font-family: Poppins;
+            height: 83vh;
+            overflow: hidden;
         }
         .navbar-brand span{
             font-size: 30px;
@@ -19,11 +21,36 @@
         }
 
         #map {
-            overflow-y: hidden;
-            height: 100%;
-            width: 50%;
-            float: left;
+            height: 83vh;
         }
+
+        #page{
+            height: 83vh;
+            overflow-y: scroll;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;
+        }
+
+        #page::-webkit-scrollbar {
+            display: none;
+          }
+
+        @media (max-width: 991.98px) { 
+            #map{
+                height: 43vh;
+            }
+            #page{
+                height: 50vh;
+            }
+         }
+
+         .station-item{
+            padding: 15px 12px;
+            border: 1px solid grey;
+            border-radius: 25px;
+         }
+          
+
 
     </style>
     
@@ -38,23 +65,27 @@
         </ul>
     </nav>
 
-
-    <!-- The div to hold the map -->
-    <div class="container" id=map>
-    </div>
-    <div id='page'>
-        <h3 class='text-center text-light mb-4'> <i class='text-light fa fa-map-marker'></i> Nearby Shops</h3>
-
-        <li class='list-unstyled mt-4' id='stations'>
-            
-        </li>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="" id=map>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div id='page' class="container">
+                <h3 class='text-center text-light mb-4'> <i class='text-light fa fa-map-marker'></i> Police Stations near you </h3>
+        
+                <li class='list-unstyled mt-4' id='stations'>
+                    
+                </li>
+            </div>
+        </div>
     </div>
 
 
 
     <!-- Custom JS -->
     <script>
-        let pos;
+    let pos;
     let map;
     let bounds;
     let infoWindow;
@@ -70,11 +101,13 @@
 
     // Try HTML5 geolocation
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
+        navigator.geolocation.getCurrentPosition((position) => {
         pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
         };
+
+        console.log(pos)
 
         
         map = new google.maps.Map(document.getElementById('map'), {
@@ -169,7 +202,7 @@
             * If we fetch the details for all place results as soon as we get
             * the search response, we will hit API rate limits. */
             service.getDetails(request, (placeResult, status) => {
-            showDetails(placeResult, marker, status)
+            // showDetails(placeResult, marker, status)
             });
         });
 
@@ -187,13 +220,15 @@
         console.log(results)
         for(var i in results){
             var shop = `
-                <ul class='shop-item'>
-                    <img src='${results[i].icon}' class='icon'>
-                    <div class=''>
-                        <h4 class='mt-2'>${results[i].name}</h4>
-                        <p class='mt-2'>${results[i].vicinity}</p>
-                        <i class='fa fa-heart'></i>
-                        <i class='fa fa-times text-danger'></i>
+                <ul class='station-item'>
+                    <div class="row">
+                        <div class="col-3">
+                            <img src='${results[i].icon}' class='icon' style="background-color:'${results[i].icon_backgrounf_color}'">
+                        </div>
+                        <div class='col-9'>
+                            <h4 class='mt-2'>${results[i].name}</h4>
+                            <p class='mt-2'>${results[i].vicinity}</p>
+                        </div>
                     </div>
                 </ul>
             `
