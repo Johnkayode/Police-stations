@@ -50,6 +50,10 @@
             border-radius: 25px;
             cursor: pointer;
          }
+
+         .place-name{
+             font-size: 18px;
+         }
           
 
 
@@ -139,62 +143,25 @@
         // Call Places Nearby Search on user's location
         getNearbyPlaces(pos);
     }
-    else if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-        pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-        };
-
-        console.log(pos)
-
-        
+    else {
+        pos = { lat: 6.8299846, lng: 3.9164585 };
         map = new google.maps.Map(document.getElementById('map'), {
             center: pos,
             zoom: 15
         });
+
         bounds.extend(pos);
 
         infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
+        infoWindow.setContent('Ijebu Ode, Nigeria.');
         infoWindow.open(map);
         map.setCenter(pos);
 
-        
 
         /* TODO: Step 3B2, Call the Places Nearby Search */
         // Call Places Nearby Search on user's location
         getNearbyPlaces(pos);
-        }, () => {
-        // Browser supports geolocation, but user has denied permission
-        handleLocationError(true, infoWindow);
-        });
-    } else {
-        // Browser doesn't support geolocation
-        handleLocationError(false, infoWindow);
-    }
-    }
-
-    // Handle a geolocation error
-    function handleLocationError(browserHasGeolocation, infoWindow) {
-    // Set default location to Sydney, Australia
-    pos = { lat: 6.5243793, lng: 3.3792057 };
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: pos,
-        zoom: 15
-    });
-
-    // Display an InfoWindow at the map center
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Geolocation permissions denied. Using default location.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-    currentInfoWindow = infoWindow;
-
-    /* TODO: Step 3B3, Call the Places Nearby Search */
-    // Call Places Nearby Search on the default location
-    getNearbyPlaces(pos);
+    } 
     }
 
     /* TODO: Step 3B1, Call the Places Nearby Search */
@@ -236,6 +203,21 @@
             fields: ['name', 'formatted_address', 'geometry', 'rating',
                 'website', 'photos']
             };
+
+            // Prevents card from being added more than once (i.e. when page is resized and google maps re-renders)
+                $(".card").empty()
+                $(".gm-style").append(
+                    `<div class="py-3 px-3 card " style="position: absolute; right: 0px; top: 0px;">
+                        <div>
+                            <div class="place-card place-card-large"> 
+                                <div class="place-desc-large"> 
+                                    <div class="place-name"> ${place.name} </div>
+                                    <div class="address"> ${place.vicinity} </div>
+                                </div>
+                        </div>
+                    </div>
+                `);
+            
         
             /* Only fetch the details of a place when the user clicks on a marker.
             * If we fetch the details for all place results as soon as we get
