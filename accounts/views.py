@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserRegistrationForm, CustomAuthForm
+from .utils import geocode
+
+import json
 
 
 
@@ -39,5 +42,10 @@ def logout_user(request):
 
 @login_required
 def dashboard(request):
-    return render(request, "dashboard.html")
+    context = {}
+    if request.method == "GET":
+        address = request.GET.get("address")
+        location = geocode(address)
+        context["address_location"] = json.dumps(location)
+    return render(request, "dashboard.html", context=context)
 

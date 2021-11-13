@@ -48,6 +48,7 @@
             padding: 15px 12px;
             border: 1px solid grey;
             border-radius: 25px;
+            cursor: pointer;
          }
           
 
@@ -57,11 +58,24 @@
     
     <!-- Navbar -->
     <nav class="navbar navbar-light py-3 px-5">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/account">
             <span class="h3 mx-2 brand-text">Police</span>
         </a>
         <ul class="nav justify-content-end">
-            <a href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out fa-2x"></i></a>
+            <li class="mx-3">
+                <form action="/account/">
+                    <div class="input-group rounded">
+                        <input type="search" name="address" class="form-control rounded" placeholder="Search Address" aria-label="Search"
+                        aria-describedby="search-addon" />
+                        <span class="input-group-text border-0 bg-light" id="search-addon">
+                        <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </form>
+            </li>
+            <li>
+                <a href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out fa-2x"></i></a>
+            </li>
         </ul>
     </nav>
 
@@ -73,7 +87,6 @@
         <div class="col-lg-6">
             <div id='page' class="container">
                 <h3 class='text-center text-light mb-4'> <i class='text-light fa fa-map-marker'></i> Police Stations near you </h3>
-        
                 <li class='list-unstyled mt-4' id='stations'>
                     
                 </li>
@@ -85,6 +98,10 @@
 
     <!-- Custom JS -->
     <script>
+        var search_location = {{address_location|safe}};
+        console.log(search_location)
+    </script>
+    <script>
     let pos;
     let map;
     let bounds;
@@ -92,7 +109,10 @@
     let currentInfoWindow;
     let service;
     let infoPane;
+   
+   
     function initMap() {
+
     // Initialize variables
     bounds = new google.maps.LatLngBounds();
     infoWindow = new google.maps.InfoWindow;
@@ -100,7 +120,26 @@
     /* TODO: Step 4A3: Add a generic sidebar */
 
     // Try HTML5 geolocation
-    if (navigator.geolocation) {
+    if (search_location){
+        pos = { lat: search_location.latitude, lng: search_location.longitude };
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: pos,
+            zoom: 15
+        });
+
+        bounds.extend(pos);
+
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Location found.');
+        infoWindow.open(map);
+        map.setCenter(pos);
+
+
+        /* TODO: Step 3B2, Call the Places Nearby Search */
+        // Call Places Nearby Search on user's location
+        getNearbyPlaces(pos);
+    }
+    else if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
         pos = {
             lat: position.coords.latitude,
@@ -139,7 +178,7 @@
     // Handle a geolocation error
     function handleLocationError(browserHasGeolocation, infoWindow) {
     // Set default location to Sydney, Australia
-    pos = { lat: -33.856, lng: 151.215 };
+    pos = { lat: 6.5243793, lng: 3.3792057 };
     map = new google.maps.Map(document.getElementById('map'), {
         center: pos,
         zoom: 15
@@ -226,7 +265,7 @@
                             <img src='${results[i].icon}' class='icon' style="background-color:'${results[i].icon_backgrounf_color}'">
                         </div>
                         <div class='col-9'>
-                            <h4 class='mt-2'>${results[i].name}</h4>
+                            <h4 class='mt-2 text-pp'>${results[i].name}</h4>
                             <p class='mt-2'>${results[i].vicinity}</p>
                         </div>
                     </div>
