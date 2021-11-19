@@ -43,9 +43,11 @@ def logout_user(request):
 @login_required
 def dashboard(request):
     context = {}
-    if request.method == "GET":
-        address = request.GET.get("address")
+    address = request.GET.get("address", None)
+    if address:
         location = geocode(address)
         context["address_location"] = json.dumps(location)
+    else:
+        context["address_location"] = address
     return render(request, "dashboard.html", context=context)
 

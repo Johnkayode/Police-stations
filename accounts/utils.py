@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def geocode(address):
-    url = "https://maps.googleapis.com/maps/api/geocode/json"
+    url = "https://maps.googleapis.com/maps/api/geocode/json?components=country:ng"
     payload = {
-            "address": address,
+            "address": str(address) + "Ijebu Ode",
             "key": os.getenv("GOOGLE_API_KEY")
     }
 
@@ -18,16 +18,15 @@ def geocode(address):
         raise e
 
     resp = json.loads(r.text)
-
-    if resp['results']:
-
+    results = resp["results"]
+    if results:
         return {
-            "address": resp['results'][0]['formatted_address'],
-            "latitude": resp['results'][0]['geometry']['location']['lat'],
-            "longitude": resp['results'][0]['geometry']['location']['lng']
+            "address": results[0]['formatted_address'],
+            "latitude": results[0]['geometry']['location']['lat'],
+            "longitude": results[0]['geometry']['location']['lng']
         }
 
-    return None
+    return {"error":"Address Not Found"}
 
 
 

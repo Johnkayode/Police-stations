@@ -103,7 +103,6 @@
     <!-- Custom JS -->
     <script>
         var search_location = {{address_location|safe}};
-        console.log(search_location)
     </script>
     <script>
     let pos;
@@ -124,9 +123,29 @@
     /* TODO: Step 4A3: Add a generic sidebar */
 
     // Try HTML5 geolocation
-    if (search_location){
-        pos = { lat: search_location.latitude, lng: search_location.longitude };
-        map = new google.maps.Map(document.getElementById('map'), {
+    if (typeof search_location !== 'undefined'){
+        if (search_location.error){
+            pos = { lat: 6.8299846, lng: 3.9164585 };
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: pos,
+                zoom: 15
+            });
+    
+            bounds.extend(pos);
+    
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Address not found. Using default location.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+    
+    
+            /* TODO: Step 3B2, Call the Places Nearby Search */
+            // Call Places Nearby Search on user's location
+            getNearbyPlaces(pos);
+        }
+        else{
+            pos = { lat: search_location.latitude, lng: search_location.longitude };
+            map = new google.maps.Map(document.getElementById('map'), {
             center: pos,
             zoom: 15
         });
@@ -142,6 +161,8 @@
         /* TODO: Step 3B2, Call the Places Nearby Search */
         // Call Places Nearby Search on user's location
         getNearbyPlaces(pos);
+        }
+        
     }
     else {
         pos = { lat: 6.8299846, lng: 3.9164585 };
