@@ -118,6 +118,8 @@
 
     // Initialize variables
     bounds = new google.maps.LatLngBounds();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    const directionsService = new google.maps.DirectionsService();
     infoWindow = new google.maps.InfoWindow;
     currentInfoWindow = infoWindow;
     /* TODO: Step 4A3: Add a generic sidebar */
@@ -177,7 +179,7 @@
         infoWindow.setContent('Ijebu Ode, Nigeria.');
         infoWindow.open(map);
         map.setCenter(pos);
-
+    
 
         /* TODO: Step 3B2, Call the Places Nearby Search */
         // Call Places Nearby Search on user's location
@@ -234,6 +236,7 @@
                                 <div class="place-desc-large"> 
                                     <div class="place-name"> ${place.name} </div>
                                     <div class="address"> ${place.vicinity} </div>
+                                    <a href="https://www.google.com/maps/dir/current+location/${place.vicinity}" target="_blank">Directions</a>
                                 </div>
                         </div>
                     </div>
@@ -270,6 +273,7 @@
                         <div class='col-9'>
                             <h4 class='mt-2 text-pp'>${results[i].name}</h4>
                             <p class='mt-2'>${results[i].vicinity}</p>
+                            <a href="https://www.google.com/maps/dir/current+location/${results[i].vicinity}" target="_blank">Directions</a>
                         </div>
                     </div>
                 </ul>
@@ -279,6 +283,7 @@
 
         
     }
+    
     
 </script>
     <!-- Google Maps -->
